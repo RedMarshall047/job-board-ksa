@@ -30,6 +30,18 @@
 		header("location: ./search.php");
 	}
 
+	if(isset($_GET['delete'])) {
+		$id = 	$_GET['delete'];	
+		$query = "DELETE FROM jobs ";
+		$query .= "WHERE id ='" .$id. "' ";
+		$query .= "LIMIT 1";
+		$result = mysqli_query($db, $query);
+		if(!$result) {
+			exit("Data query failed:" . mysqli_error($db));
+		}
+
+	}
+
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +83,13 @@
 						echo "<button class='btn btn-info'>Cancel Application</button>";
 					}else{
 						if($job["employer"] == $id){
-							echo "<button class='btn btn-info'>Remove This Post</button>";
-						}else{
-							echo "<button class='btn btn-info'>Apply Now!</button>";
-						}
-					}
+				?>
+				<a href="details.php?delete=<?php echo $jobId; ?>"><button class='btn btn-info'>Remove This Post</button></a>
+				<?php
+					} else{
+					 echo "<button class='btn btn-info'>Apply Now!</button>";
+					 }
+				  }
 				?>
 			</div>
 		</div>
